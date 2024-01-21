@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Śmierci w USA</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/USA_Homicide_0.js"></script>
+        <script src="data/USA_drugs_overdoses_1.js"></script>
+        <script src="data/USA_firearm_deaths_2.js"></script>
+        <script src="data/Points_border_3.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[20.22080198977934,-132.393841656095],[52.60004707393742,-73.98846980975411]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_USA_Homicide_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">State_Name</th>\
+                        <td>' + (feature.properties['State_Name'] !== null ? autolinker.link(feature.properties['State_Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Homicide_RATE</strong><br />' + (feature.properties['Homicide_RATE'] !== null ? autolinker.link(feature.properties['Homicide_RATE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Homicide_DEATHS</strong><br />' + (feature.properties['Homicide_DEATHS'] !== null ? autolinker.link(feature.properties['Homicide_DEATHS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_USA_Homicide_0_0(feature) {
+            if (feature.properties['Homicide_DEATHS'] >= 10.000000 && feature.properties['Homicide_DEATHS'] <= 35.000000 ) {
+                return {
+                pane: 'pane_USA_Homicide_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,245,240,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Homicide_DEATHS'] >= 35.000000 && feature.properties['Homicide_DEATHS'] <= 50.000000 ) {
+                return {
+                pane: 'pane_USA_Homicide_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,227,214,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Homicide_DEATHS'] >= 50.000000 && feature.properties['Homicide_DEATHS'] <= 100.000000 ) {
+                return {
+                pane: 'pane_USA_Homicide_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,198,175,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Homicide_DEATHS'] >= 100.000000 && feature.properties['Homicide_DEATHS'] <= 250.000000 ) {
+                return {
+                pane: 'pane_USA_Homicide_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,164,134,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Homicide_DEATHS'] >= 250.000000 && feature.properties['Homicide_DEATHS'] <= 500.000000 ) {
+                return {
+                pane: 'pane_USA_Homicide_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,129,97,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Homicide_DEATHS'] >= 500.000000 && feature.properties['Homicide_DEATHS'] <= 700.000000 ) {
+                return {
+                pane: 'pane_USA_Homicide_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(248,93,66,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Homicide_DEATHS'] >= 700.000000 && feature.properties['Homicide_DEATHS'] <= 1100.000000 ) {
+                return {
+                pane: 'pane_USA_Homicide_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(234,55,42,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Homicide_DEATHS'] >= 1100.000000 && feature.properties['Homicide_DEATHS'] <= 1500.000000 ) {
+                return {
+                pane: 'pane_USA_Homicide_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,25,29,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Homicide_DEATHS'] >= 1500.000000 && feature.properties['Homicide_DEATHS'] <= 2000.000000 ) {
+                return {
+                pane: 'pane_USA_Homicide_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(169,16,22,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Homicide_DEATHS'] >= 2000.000000 && feature.properties['Homicide_DEATHS'] <= 2495.000000 ) {
+                return {
+                pane: 'pane_USA_Homicide_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(103,0,13,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_USA_Homicide_0');
+        map.getPane('pane_USA_Homicide_0').style.zIndex = 400;
+        map.getPane('pane_USA_Homicide_0').style['mix-blend-mode'] = 'normal';
+        var layer_USA_Homicide_0 = new L.geoJson(json_USA_Homicide_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_USA_Homicide_0',
+            layerName: 'layer_USA_Homicide_0',
+            pane: 'pane_USA_Homicide_0',
+            onEachFeature: pop_USA_Homicide_0,
+            style: style_USA_Homicide_0_0,
+        });
+        bounds_group.addLayer(layer_USA_Homicide_0);
+        map.addLayer(layer_USA_Homicide_0);
+        function pop_USA_drugs_overdoses_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">State_Name</th>\
+                        <td>' + (feature.properties['State_Name'] !== null ? autolinker.link(feature.properties['State_Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Drugs_overdoses_RATE</strong><br />' + (feature.properties['Drugs_overdoses_RATE'] !== null ? autolinker.link(feature.properties['Drugs_overdoses_RATE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Drugs_overdoses_DEATHS</strong><br />' + (feature.properties['Drugs_overdoses_DEATHS'] !== null ? autolinker.link(feature.properties['Drugs_overdoses_DEATHS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_USA_drugs_overdoses_1_0(feature) {
+            if (feature.properties['Drugs_overdoses_DEATHS'] >= 105.000000 && feature.properties['Drugs_overdoses_DEATHS'] <= 1184.600000 ) {
+                return {
+                pane: 'pane_USA_drugs_overdoses_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,238,246,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Drugs_overdoses_DEATHS'] >= 1184.600000 && feature.properties['Drugs_overdoses_DEATHS'] <= 2264.200000 ) {
+                return {
+                pane: 'pane_USA_drugs_overdoses_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,213,233,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Drugs_overdoses_DEATHS'] >= 2264.200000 && feature.properties['Drugs_overdoses_DEATHS'] <= 3343.800000 ) {
+                return {
+                pane: 'pane_USA_drugs_overdoses_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(218,187,219,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Drugs_overdoses_DEATHS'] >= 3343.800000 && feature.properties['Drugs_overdoses_DEATHS'] <= 4423.400000 ) {
+                return {
+                pane: 'pane_USA_drugs_overdoses_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(218,154,203,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Drugs_overdoses_DEATHS'] >= 4423.400000 && feature.properties['Drugs_overdoses_DEATHS'] <= 5503.000000 ) {
+                return {
+                pane: 'pane_USA_drugs_overdoses_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,119,185,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Drugs_overdoses_DEATHS'] >= 5503.000000 && feature.properties['Drugs_overdoses_DEATHS'] <= 6582.600000 ) {
+                return {
+                pane: 'pane_USA_drugs_overdoses_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,85,163,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Drugs_overdoses_DEATHS'] >= 6582.600000 && feature.properties['Drugs_overdoses_DEATHS'] <= 7662.200000 ) {
+                return {
+                pane: 'pane_USA_drugs_overdoses_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(222,52,138,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Drugs_overdoses_DEATHS'] >= 7662.200000 && feature.properties['Drugs_overdoses_DEATHS'] <= 8741.800000 ) {
+                return {
+                pane: 'pane_USA_drugs_overdoses_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,25,113,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Drugs_overdoses_DEATHS'] >= 8741.800000 && feature.properties['Drugs_overdoses_DEATHS'] <= 9821.400000 ) {
+                return {
+                pane: 'pane_USA_drugs_overdoses_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(183,12,90,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Drugs_overdoses_DEATHS'] >= 9821.400000 && feature.properties['Drugs_overdoses_DEATHS'] <= 10901.000000 ) {
+                return {
+                pane: 'pane_USA_drugs_overdoses_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,0,67,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_USA_drugs_overdoses_1');
+        map.getPane('pane_USA_drugs_overdoses_1').style.zIndex = 401;
+        map.getPane('pane_USA_drugs_overdoses_1').style['mix-blend-mode'] = 'normal';
+        var layer_USA_drugs_overdoses_1 = new L.geoJson(json_USA_drugs_overdoses_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_USA_drugs_overdoses_1',
+            layerName: 'layer_USA_drugs_overdoses_1',
+            pane: 'pane_USA_drugs_overdoses_1',
+            onEachFeature: pop_USA_drugs_overdoses_1,
+            style: style_USA_drugs_overdoses_1_0,
+        });
+        bounds_group.addLayer(layer_USA_drugs_overdoses_1);
+        map.addLayer(layer_USA_drugs_overdoses_1);
+        function pop_USA_firearm_deaths_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">State_Name</th>\
+                        <td>' + (feature.properties['State_Name'] !== null ? autolinker.link(feature.properties['State_Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>firearm_RATE</strong><br />' + (feature.properties['firearm_RATE'] !== null ? autolinker.link(feature.properties['firearm_RATE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>firearm_DEATHS</strong><br />' + (feature.properties['firearm_DEATHS'] !== null ? autolinker.link(feature.properties['firearm_DEATHS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_USA_firearm_deaths_2_0(feature) {
+            if (feature.properties['firearm_DEATHS'] >= 64.000000 && feature.properties['firearm_DEATHS'] <= 518.900000 ) {
+                return {
+                pane: 'pane_USA_firearm_deaths_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,252,245,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['firearm_DEATHS'] >= 518.900000 && feature.properties['firearm_DEATHS'] <= 973.800000 ) {
+                return {
+                pane: 'pane_USA_firearm_deaths_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,246,227,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['firearm_DEATHS'] >= 973.800000 && feature.properties['firearm_DEATHS'] <= 1428.700000 ) {
+                return {
+                pane: 'pane_USA_firearm_deaths_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,236,201,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['firearm_DEATHS'] >= 1428.700000 && feature.properties['firearm_DEATHS'] <= 1883.600000 ) {
+                return {
+                pane: 'pane_USA_firearm_deaths_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(178,224,171,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['firearm_DEATHS'] >= 1883.600000 && feature.properties['firearm_DEATHS'] <= 2338.500000 ) {
+                return {
+                pane: 'pane_USA_firearm_deaths_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(142,208,140,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['firearm_DEATHS'] >= 2338.500000 && feature.properties['firearm_DEATHS'] <= 2793.400000 ) {
+                return {
+                pane: 'pane_USA_firearm_deaths_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(102,189,111,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['firearm_DEATHS'] >= 2793.400000 && feature.properties['firearm_DEATHS'] <= 3248.300000 ) {
+                return {
+                pane: 'pane_USA_firearm_deaths_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(61,167,90,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['firearm_DEATHS'] >= 3248.300000 && feature.properties['firearm_DEATHS'] <= 3703.200000 ) {
+                return {
+                pane: 'pane_USA_firearm_deaths_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(36,140,69,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['firearm_DEATHS'] >= 3703.200000 && feature.properties['firearm_DEATHS'] <= 4158.100000 ) {
+                return {
+                pane: 'pane_USA_firearm_deaths_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(3,112,46,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['firearm_DEATHS'] >= 4158.100000 && feature.properties['firearm_DEATHS'] <= 4613.000000 ) {
+                return {
+                pane: 'pane_USA_firearm_deaths_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,68,27,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_USA_firearm_deaths_2');
+        map.getPane('pane_USA_firearm_deaths_2').style.zIndex = 402;
+        map.getPane('pane_USA_firearm_deaths_2').style['mix-blend-mode'] = 'normal';
+        var layer_USA_firearm_deaths_2 = new L.geoJson(json_USA_firearm_deaths_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_USA_firearm_deaths_2',
+            layerName: 'layer_USA_firearm_deaths_2',
+            pane: 'pane_USA_firearm_deaths_2',
+            onEachFeature: pop_USA_firearm_deaths_2,
+            style: style_USA_firearm_deaths_2_0,
+        });
+        bounds_group.addLayer(layer_USA_firearm_deaths_2);
+        map.addLayer(layer_USA_firearm_deaths_2);
+        function pop_Points_border_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Name</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">State</th>\
+                        <td>' + (feature.properties['State'] !== null ? autolinker.link(feature.properties['State'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Points_border_3_0() {
+            return {
+                pane: 'pane_Points_border_3',
+                radius: 13.2,
+                opacity: 1,
+                color: 'rgba(184,8,8,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(184,8,8,1.0)',
+                interactive: true,
+            }
+        }
+        function style_Points_border_3_1() {
+            return {
+                pane: 'pane_Points_border_3',
+                radius: 14.4,
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,0,0,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Points_border_3');
+        map.getPane('pane_Points_border_3').style.zIndex = 403;
+        map.getPane('pane_Points_border_3').style['mix-blend-mode'] = 'normal';
+        var layer_Points_border_3 = new L.geoJson.multiStyle(json_Points_border_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Points_border_3',
+            layerName: 'layer_Points_border_3',
+            pane: 'pane_Points_border_3',
+            onEachFeature: pop_Points_border_3,
+            pointToLayers: [function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Points_border_3_0(feature));
+            },function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Points_border_3_1(feature));
+            },
+        ]});
+        bounds_group.addLayer(layer_Points_border_3);
+        map.addLayer(layer_Points_border_3);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Śmierci w USA</h2>';
+            };
+            title.addTo(map);
+            var abstract = new L.Control({'position':'bottomright'});
+            abstract.onAdd = function (map) {
+                this._div = L.DomUtil.create('div',
+                'leaflet-control abstract');
+                this._div.id = 'abstract'
+                    this._div.setAttribute("onmouseenter", "abstract.show()");
+                    this._div.setAttribute("onmouseleave", "abstract.hide()");
+                    this.hide();
+                    return this._div;
+                };
+                abstract.hide = function () {
+                    this._div.classList.remove("abstractUncollapsed");
+                    this._div.classList.add("abstract");
+                    this._div.innerHTML = 'i'
+                }
+                abstract.show = function () {
+                    this._div.classList.remove("abstract");
+                    this._div.classList.add("abstractUncollapsed");
+                    this._div.innerHTML = 'Mapa zestawiająca ze sobą statystyki dotyczące różnych typów nieszczęśliwych śmierci.<br />Legenda warstwy jest stworzona na podstawie ogólnej ilości śmierci z danej kategorii. Dane numeryczne na mapie są ilością śmierci w przeliczeniu na 100 tysięcy mieszkańców. <br />Dane reprezentują rok 2021.<br />Punkty zaznaczone na mapie są punktami przez które przemycana jest największa ilość narkotyków.';
+            };
+            abstract.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Points_border_3.png" /> Points_border': layer_Points_border_3,'USA_firearm_deaths<br /><table><tr><td style="text-align: center;"><img src="legend/USA_firearm_deaths_2_645190.png" /></td><td>64 - 519</td></tr><tr><td style="text-align: center;"><img src="legend/USA_firearm_deaths_2_5199741.png" /></td><td>519 - 974</td></tr><tr><td style="text-align: center;"><img src="legend/USA_firearm_deaths_2_97414292.png" /></td><td>974 - 1429</td></tr><tr><td style="text-align: center;"><img src="legend/USA_firearm_deaths_2_142918843.png" /></td><td>1429 - 1884</td></tr><tr><td style="text-align: center;"><img src="legend/USA_firearm_deaths_2_188423394.png" /></td><td>1884 - 2339</td></tr><tr><td style="text-align: center;"><img src="legend/USA_firearm_deaths_2_233927935.png" /></td><td>2339 - 2793</td></tr><tr><td style="text-align: center;"><img src="legend/USA_firearm_deaths_2_279332486.png" /></td><td>2793 - 3248</td></tr><tr><td style="text-align: center;"><img src="legend/USA_firearm_deaths_2_324837037.png" /></td><td>3248 - 3703</td></tr><tr><td style="text-align: center;"><img src="legend/USA_firearm_deaths_2_370341588.png" /></td><td>3703 - 4158</td></tr><tr><td style="text-align: center;"><img src="legend/USA_firearm_deaths_2_415846139.png" /></td><td>4158 - 4613</td></tr></table>': layer_USA_firearm_deaths_2,'USA_drugs_overdoses<br /><table><tr><td style="text-align: center;"><img src="legend/USA_drugs_overdoses_1_10511850.png" /></td><td>105 - 1185</td></tr><tr><td style="text-align: center;"><img src="legend/USA_drugs_overdoses_1_118522641.png" /></td><td>1185 - 2264</td></tr><tr><td style="text-align: center;"><img src="legend/USA_drugs_overdoses_1_226433442.png" /></td><td>2264 - 3344</td></tr><tr><td style="text-align: center;"><img src="legend/USA_drugs_overdoses_1_334444233.png" /></td><td>3344 - 4423</td></tr><tr><td style="text-align: center;"><img src="legend/USA_drugs_overdoses_1_442355034.png" /></td><td>4423 - 5503</td></tr><tr><td style="text-align: center;"><img src="legend/USA_drugs_overdoses_1_550365835.png" /></td><td>5503 - 6583</td></tr><tr><td style="text-align: center;"><img src="legend/USA_drugs_overdoses_1_658376626.png" /></td><td>6583 - 7662</td></tr><tr><td style="text-align: center;"><img src="legend/USA_drugs_overdoses_1_766287427.png" /></td><td>7662 - 8742</td></tr><tr><td style="text-align: center;"><img src="legend/USA_drugs_overdoses_1_874298218.png" /></td><td>8742 - 9821</td></tr><tr><td style="text-align: center;"><img src="legend/USA_drugs_overdoses_1_9821109019.png" /></td><td>9821 - 10901</td></tr></table>': layer_USA_drugs_overdoses_1,'USA_Homicide<br /><table><tr><td style="text-align: center;"><img src="legend/USA_Homicide_0_10350.png" /></td><td>10 - 35</td></tr><tr><td style="text-align: center;"><img src="legend/USA_Homicide_0_35501.png" /></td><td>35 - 50</td></tr><tr><td style="text-align: center;"><img src="legend/USA_Homicide_0_501002.png" /></td><td>50 - 100</td></tr><tr><td style="text-align: center;"><img src="legend/USA_Homicide_0_1002503.png" /></td><td>100 - 250</td></tr><tr><td style="text-align: center;"><img src="legend/USA_Homicide_0_2505004.png" /></td><td>250 - 500</td></tr><tr><td style="text-align: center;"><img src="legend/USA_Homicide_0_5007005.png" /></td><td>500 - 700</td></tr><tr><td style="text-align: center;"><img src="legend/USA_Homicide_0_70011006.png" /></td><td>700 - 1100</td></tr><tr><td style="text-align: center;"><img src="legend/USA_Homicide_0_110015007.png" /></td><td>1100 - 1500</td></tr><tr><td style="text-align: center;"><img src="legend/USA_Homicide_0_150020008.png" /></td><td>1500 - 2000</td></tr><tr><td style="text-align: center;"><img src="legend/USA_Homicide_0_200024959.png" /></td><td>2000 - 2495</td></tr></table>': layer_USA_Homicide_0,}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_USA_Homicide_0.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Homicide_RATE'] !== null?String('<div style="color: #000000; font-size: 10pt; font-style: italic; font-family: \'Cambria\', sans-serif;">' + layer.feature.properties['Homicide_RATE']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_USA_Homicide_0'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_USA_drugs_overdoses_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Drugs_overdoses_RATE'] !== null?String('<div style="color: #000000; font-size: 10pt; font-style: italic; font-family: \'Cambria\', sans-serif;">' + layer.feature.properties['Drugs_overdoses_RATE']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_USA_drugs_overdoses_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_USA_firearm_deaths_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['firearm_RATE'] !== null?String('<div style="color: #000000; font-size: 10pt; font-style: italic; font-family: \'Cambria\', sans-serif;">' + layer.feature.properties['firearm_RATE']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_USA_firearm_deaths_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_USA_Homicide_0,layer_USA_drugs_overdoses_1,layer_USA_firearm_deaths_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_USA_Homicide_0,layer_USA_drugs_overdoses_1,layer_USA_firearm_deaths_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_USA_Homicide_0,layer_USA_drugs_overdoses_1,layer_USA_firearm_deaths_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_USA_Homicide_0,layer_USA_drugs_overdoses_1,layer_USA_firearm_deaths_2]);
+        });
+		
+				var layer_OpenStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+		});
+		map.addLayer(layer_OpenStreetMap);
+		
+				L.control.scale({
+		  metric: true,
+		  imperial: false,
+		}).addTo(map);
+		
+		
+        </script>
+    </body>
+</html>
